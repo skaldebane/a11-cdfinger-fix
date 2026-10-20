@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: all build test
+.PHONY: all build test monitor
 all: test build
 
 build:
@@ -8,3 +8,6 @@ build:
 
 test:
 	$(PYTHON) -m unittest discover -s tests -v
+
+monitor: test
+	$(PYTHON) monitor/build.py

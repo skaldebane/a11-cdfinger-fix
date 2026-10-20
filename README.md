@@ -3,6 +3,10 @@
 A small, systemless Magisk module that avoids a failed-probe cleanup hang in the
 Samsung Galaxy A11 fingerprint HAL. **It does not bypass biometric authentication.**
 
+An optional, separate [passive diagnostic monitor](monitor/README.md) captures HAL
+restarts/errors and posts local incident notifications. Build it with `make monitor`.
+It is not bundled with or required by the workaround.
+
 ## Supported configuration
 
 Installation is restricted to the configuration on which recovery was tested:
