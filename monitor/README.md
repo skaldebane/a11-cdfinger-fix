@@ -85,9 +85,22 @@ context is safely stored, before follow-up diagnostics finish.
 Validation on the target phone: live collectors, singleton startup, clean stop,
 root-only files, completed simulated incident snapshots, and the actual updated
 notification record were checked without rebooting or restarting the fingerprint
-HAL. Automatic startup across a full reboot remains unverified until the next
-normal reboot. Local tests exercise detection logic, rotation, retention,
-permissions, safe command quoting, and reproducible packaging.
+HAL. Local tests exercise detection logic, rotation, retention, permissions, safe
+command quoting, and reproducible packaging.
+
+Automatic startup across a full reboot was then verified: the daemon started
+after boot completion, established the live HAL PID as its baseline, and correctly
+captured the shutdown that preceded the next reboot as a `hal-lifecycle-change`
+incident. That incident's notification failed because the phone was already
+shutting down, which is expected. One rough edge was observed: while the system
+was shutting down, the daemon restarted its logcat collector a few times in quick
+succession. It is harmless, but a future revision could stop restarting
+collectors once a shutdown is in progress.
+
+The monitor also proved useful during that reboot: it recorded the HAL's
+post-reboot startup, including the `Can't open silead HW Module, error: -22`
+message from the paired workaround module, and the complete absence of Silead
+kernel-driver messages for that boot.
 
 ## Stop / remove
 
